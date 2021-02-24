@@ -4,101 +4,101 @@
 
 clear
 echo
-echo "Welcome to SimplyArch Installer"
+echo "Bienvenido a SimplyArch Installer (ahora en Español)"
 echo "Copyright (C) 2021 Victor Bayas"
 echo
-echo "DISCLAIMER: THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED"
+echo "DESCARGO: EL SOFTWARE SE PROPORCIONA ""TAL CUAL"", SIN GARANTÍA DE NINGÚN TIPO, EXPRESA O IMPLÍCITA"
 echo
-echo "WARNING: MAKE SURE TO TYPE CORRECTLY BECAUSE THE SCRIPT WON'T PERFORM INPUT VALIDATIONS"
+echo "ADVERTENCIA: ESCRIBA BIEN PORQUE EL SCRIPT NO VALIDA LAS ENTRADAS"
 echo
-echo "We'll guide you through the installation process of a fully functional Arch Linux system"
+echo "Te guiaremos a lo largo de la instalación de un sistema Arch Linux completamente funcional"
 echo
-read -p "Do you want to continue? (Y/N): " prompt
+read -p "Continuar? (Y/N): " prompt
 if [[ $prompt == "y" || $prompt == "Y" || $prompt == "yes" || $prompt == "Yes" ]]
 then
 	clear
 	# Ask locales
-	echo ">>> Region & Language <<<"
+	echo ">>> Región & Idioma <<<"
 	echo
-	echo "EXAMPLES:"
-	echo "us United States | us-acentos US Intl | latam Latin American Spanish | es Spanish"
-	read -p "Keyboard layout: " keyboard 
+	echo "EJEMPLOS:"
+	echo "us Inglés | us-acentos Inglés Intl | latam Español latino | es Español de España"
+	read -p "Distribución de teclado: " keyboard 
 	if [[ -z "$keyboard" ]]
 	then
 		keyboard="us"
 	fi
 	echo
-	echo "EXAMPLES: en_US | es_ES (don't add .UTF-8)"
-	read -p "Locale: " locale
+	echo "EJEMPLOS: en_US | es_ES (no agregar el .UTF-8)"
+	read -p "Idioma: " locale
 	if [[ -z "$locale" ]]
 	then
 		locale="en_US"
 	fi
 	clear
 	# Ask account
-	echo ">>> Account Setup <<<"
+	echo ">>> Cuentas <<<"
 	echo
 	read -p "Hostname: " hostname
 	echo
-	echo "Administrator User"
+	echo "Usuario Administrador"
 	echo "User: root"
-	read -sp "Password: " rootpw
+	read -sp "Contraseña: " rootpw
 	echo
-	read -sp "Re-type password: " rootpw2
+	read -sp "Ingrese nuevamente su contraseña: " rootpw2
 	echo
 	while [[ $rootpw != "$rootpw2" ]]
 	do
 		echo
-		echo "Passwords don't match. Try again"
+		echo "Las contraseñas no coinciden. Intente nuevamente."
 		echo
-		read -sp "Password: " rootpw
+		read -sp "Contraseña: " rootpw
 		echo
-		read -sp "Re-type password: " rootpw2
+		read -sp "Ingrese nuevamente su contraseña: " rootpw2
 		echo
 	done
 	echo
-	echo "Standard User"
+	echo "Usuario Normal"
 	read -p "User: " user
 	export user
-	read -sp "Password: " userpw
+	read -sp "Contraseña: " userpw
 	echo
-	read -sp "Re-type password: " userpw2
+	read -sp "Ingrese nuevamente su contraseña: " userpw2
 	echo
 	while [[ $userpw != "$userpw2" ]]
 	do
 		echo
-		echo "Passwords don't match. Try again"
+		echo "Las contraseñas no coinciden. Intente nuevamente."
 		echo
-		read -sp "Password: " userpw
+		read -sp "Contraseña: " userpw
 		echo
-		read -sp "Re-type password: " userpw2
+		read -sp "Ingrese nuevamente su contraseña: " userpw2
 		echo
 	done
 	# Disk setup
 	clear
-	echo ">>> Disks Setup <<<"
+	echo ">>> Discos <<<"
 	echo
-	echo "Make sure to have your disk previously partitioned, if you are unsure press CTRL+C and run this script again"
+	echo "Asegúrese de tener su disco previamente particionado, si no está seguro presione CTRL + C y ejecute este script nuevamente"
 	sleep 5
 	clear
-	echo "Partition Table"
+	echo "Tabla de Particiones"
 	echo
 	lsblk
 	echo
 	while ! [[ "$partType" =~ ^(1|2)$ ]] 
 	do
-		echo "Please select partition type (1/2):"
+		echo "Seleccione el tipo de partición (1/2):"
 		echo "1. EXT4"
 		echo "2. BTRFS"
 		read -p "Partition Type: " partType
 	done
 	clear
-	echo "Partition Table"
+	echo "Tabla de Particiones"
 	echo
 	lsblk
 	echo
-	echo "Write the name of the partition e.g: /dev/sdaX /dev/nvme0n1pX"
-	read -p "Root partition: " rootPart
+	echo "Escriba el nombre de la partición, por ejemplo: /dev/sdaX /dev/nvme0n1pX"
+	read -p "Partición Raíz: " rootPart
 	case $partType in
 		1)
 			mkfs.ext4 $rootPart
@@ -116,15 +116,15 @@ then
 	clear
 	if [[ -d /sys/firmware/efi ]]
 	then
-		echo "Partition Table"
+		echo "Tabla de Particiones"
 		echo
 		lsblk
 		echo
-		echo "Write the name of the partition e.g: /dev/sdaX /dev/nvme0n1pX"
-		read -p "EFI partition: " efiPart
+		echo "Escriba el nombre de la partición, por ejemplo: /dev/sdaX /dev/nvme0n1pX"
+		read -p "Partición EFI: " efiPart
 		echo
-		echo "DUALBOOT USERS: If you are sharing this EFI partition with another OS type N"
-		read -p "Do you want to format this partition as FAT32? (Y/N): " formatEFI
+		echo "USUARIOS DE DUALBOOT: Si está compartiendo esta partición EFI con otro sistema operativo escriba N"
+		read -p "¿Quiere formatear esta partición como FAT32? (Y/N): " formatEFI
 		if [[ $formatEFI == "y" || $formatEFI == "Y" || $formatEFI == "yes" || $formatEFI == "Yes" ]]
 		then
 			mkfs.fat -F32 $efiPart
@@ -134,18 +134,18 @@ then
 		echo
 		clear
 	fi
-	echo "Partition Table"
+	echo "Tabla de Particiones"
 	echo
 	lsblk
 	echo
-	echo "NOTE: If you don't want to use a Swap partition type N below"
+	echo "NOTA: Si no quiere Swap escriba N"
 	echo
-	echo "Write the name of the partition e.g: /dev/sdaX /dev/nvme0n1pX"
-	read -p "Swap partition: " swap
+	echo "Escriba el nombre de la partición, por ejemplo: /dev/sdaX /dev/nvme0n1pX"
+	read -p "Partición Swap: " swap
 	if [[ $swap == "n" || $swap == "N" || $swap == "no" || $swap == "No" ]]
 	then
 		echo
-		echo "Swap partition not selected"
+		echo "Partición Swap no seleccionada"
 		sleep 1
 	else
 		mkswap $swap
@@ -156,10 +156,6 @@ then
 	chmod +x simple_reflector.sh
 	./simple_reflector.sh
 	clear
-	echo ">>> Installing and configuring the base system <<<"
-	echo
-	echo "This process may take a while, please wait..."
-	sleep 3
 	# Install base system
 	if [[ -d /sys/firmware/efi ]]
 	then
@@ -213,9 +209,9 @@ then
 	arch-chroot /mnt /bin/bash -c "/home/$user/simple_reflector.sh"
 	clear
 	# paru
-	echo ">>> AUR Helper <<<"
+	echo ">>> Asistente del AUR <<<"
 	echo
-	echo "Installing the Paru AUR Helper..."
+	echo "Instalando Paru..."
 	echo "cd && git clone https://aur.archlinux.org/paru-bin.git && cd paru-bin && makepkg -si --noconfirm && cd && rm -rf paru-bin" | arch-chroot /mnt /bin/bash -c "su $user"
 	clear
 	# bloat
@@ -225,12 +221,12 @@ then
 	clear
 	echo "SimplyArch Installer"
 	echo
-	echo ">>> Installation finished sucessfully <<<"
+	echo ">>> Instalación finalizada exitosamente <<<"
 	echo
-	read -p "Do you want to reboot? (Y/N): " reboot
+	read -p "Desea reiniciar? (Y/N): " reboot
 	if [[ $reboot == "y" || $reboot == "Y" || $reboot == "yes" || $reboot == "Yes" ]]
 	then
-		echo "System will reboot in a moment..."
+		echo "El sistema se reiniciará en un momento..."
 		sleep 3
 		clear
 		umount -a

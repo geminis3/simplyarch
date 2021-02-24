@@ -5,27 +5,27 @@
 #user="your_username"
 
 clear
-echo "Bloat by SimplyArch (BETA)"
+echo "Bloat por SimplyArch (BETA)"
 echo "Copyright (C) 2021 Victor Bayas"
 echo
-echo "NOTE: THIS STEP IS COMPLETELY OPTIONAL, feel free to select None and finish the installation process"
+echo "NOTA: ESTE PASO ES COMPLETAMENTE OPCIONAL, siéntase libre de seleccionar Ninguno y finalizar el proceso de instalación"
 echo
-echo "We'll guide you through the process of installing a DE, additional software and drivers."
+echo "Lo guiaremos a través del proceso de instalación de un DE, software y drivers adicionales."
 echo
-echo ">>> Desktop Environment <<<"
+echo ">>> Entorno de Escritorio (DE) <<<"
 echo
 while ! [[ "$desktop" =~ ^(1|2|3|4|5|6|7|8)$ ]]
 do
-    echo "Please select one option:"
-    echo "1. GNOME Minimal"
-    echo "2. GNOME Full (beware of pkgs count)"
+    echo "Selecciona uno:"
+    echo "1. GNOME Mínimo"
+    echo "2. GNOME Full (bastantes paquetes)"
     echo "3. KDE Plasma"
     echo "4. Xfce"
     echo "5. LXQt"	
     echo "6. LXDE"
     echo "7. Cinnamon"
-    echo "8. None - I don't want bloat"
-    read -p "Desktop (1-8): " desktop
+    echo "8. Ninguna - No quiero bloat >:("
+    read -p "Escritorio (1-8): " desktop
 done
 case $desktop in
     1)
@@ -55,7 +55,7 @@ case $desktop in
         ;;
 esac
 # install packages accordingly
-arch-chroot /mnt /bin/bash -c "pacman -Sy $DEpkg firefox pulseaudio pavucontrol pulseaudio-alsa --noconfirm --needed"
+arch-chroot /mnt /bin/bash -c "pacman -Sy $DEpkg firefox-i18n-es-es pulseaudio pavucontrol pulseaudio-alsa --noconfirm --needed"
 # enable DM accordingly
 case $desktop in
     1)
@@ -95,18 +95,18 @@ esac
 while ! [[ "$app" =~ ^(15)$ ]] 
 do
     clear
-    echo ">>> App Installer <<<"
+    echo ">>> Instalador de Apps <<<"
     echo
-    echo "NOTE: Firefox was already installed on the previous step"
+    echo "NOTA: Firefox se instaló en el paso anterior"
     echo
-    echo "Please select:"
+    echo "Seleccione:"
     echo
-    echo ">>> Browsers"
+    echo ">>> Navegadores"
     echo
     echo "1. Google Chrome"
     echo "2. Chromium"
     echo
-    echo ">>> Work & Productivity"
+    echo ">>> Trabajo & Productividad"
     echo
     echo "3. LibreOffice Fresh"
     echo "4. Zoom"
@@ -118,19 +118,19 @@ do
     echo "7. VLC"
     echo "8. MPV"
     echo
-    echo ">>> System Utilities"
+    echo ">>> Utilidades"
     echo
     echo "9. GParted"
     echo "10. Timeshift Backup"
     echo
-    echo ">>> Text Editors"
+    echo ">>> Editores de Texto"
     echo
     echo "11. Visual Studio Code"
     echo "12. Neovim"
     echo "13. GNU Emacs"
     echo "14. Atom"
     echo
-    echo "15. None / Continue to next step"
+    echo "15. Ninguni / Continuar al siguiente paso"
     read -p "App (1-15): " app
     case $app in
         1)
@@ -140,7 +140,7 @@ do
             arch-chroot /mnt /bin/bash -c "pacman -S chromium --noconfirm --needed"
             ;;
         3)
-            arch-chroot /mnt /bin/bash -c "pacman -S libreoffice-fresh --noconfirm --needed"
+            arch-chroot /mnt /bin/bash -c "pacman -S libreoffice-fresh-es --noconfirm --needed"
             ;;
         4)
             arch-chroot /mnt /bin/bash -c "sudo -u $user paru -S zoom --noconfirm --needed"
@@ -179,33 +179,33 @@ do
 done
 clear
 # nvidia
-echo ">>> NVIDIA Support <<<"
+echo ">>> Drivers de NVIDIA <<<"
 echo
-echo "Do you want to add propietary NVIDIA drivers? (Y/N)"
-read -p "NVIDIA Support: " nvidia
+echo "¿Quiere agregar los drivers propietarios de NVIDIA? (Y/N)"
+read -p "NVIDIA: " nvidia
 if [[ $nvidia == "y" || $nvidia == "Y" || $nvidia == "yes" || $nvidia == "Yes" ]]
 then
     arch-chroot /mnt /bin/bash -c "pacman -S nvidia-dkms nvidia-utils egl-wayland --noconfirm --needed"
 fi
 clear
 # broadcom
-echo ">>> Broadcom WiFi Support <<<"
+echo ">>> Broadcom WiFi <<<"
 echo
-echo "Only do this if your Broadcom card doesn't works with built-in kernel drivers"
+echo "Solo haga esto si su tarjeta Broadcom no funciona con los drivers integrados del kernel"
 echo
-echo "Do you want to add propietary Broadcom drivers? (Y/N)"
-read -p "Broadcom Support: " broadcom
+echo "¿Quiere agregar los drivers propietarios de Broadcom drivers? (Y/N)"
+read -p "Broadcom: " broadcom
 if [[ $broadcom == "y" || $broadcom == "Y" || $broadcom == "yes" || $broadcom == "Yes" ]]
 then
     arch-chroot /mnt /bin/bash -c "pacman -S broadcom-wl-dkms --noconfirm --needed"
 fi
 clear
 # intel vaapi
-echo ">>> Intel VAAPI drivers (recommended) <<<"
+echo ">>> Intel VAAPI drivers (recomendado) <<<"
 echo
-echo "Only do this if you have an Intel GPU"
+echo "Haga esto solo si tiene una GPU Intel"
 echo
-echo "Do you want to add Intel VAAPI? (Y/N)"
+echo "¿Desea agregar Intel VAAPI? (Y/N)"
 read -p "Intel VAAPI: " intelVaapi
 if [[ $intelVaapi == "y" || $intelVaapi == "Y" || $intelVaapi == "yes" || $intelVaapi == "Yes" ]]
 then
@@ -215,7 +215,7 @@ clear
 # flatpak
 echo ">>> Flatpak <<<"
 echo
-echo "Do you want to install Flatpak? (Y/N)"
+echo "¿Desea instalar Flatpak? (Y/N)"
 read -p "Flatpak: " flatpak
 if [[ $flatpak == "y" || $flatpak == "Y" || $flatpak == "yes" || $flatpak == "Yes" ]]
 then
@@ -223,10 +223,10 @@ then
 fi
 clear
 # cups
-echo ">>> Printer Support (CUPS) <<<"
+echo ">>> Soporte de Impresoras (CUPS) <<<"
 echo
-echo "Do you want to add printing support? (Y/N)"
-read -p "Printing Support: " printerSupport
+echo "¿Quieres agregar soporte de impresión? (Y/N)"
+read -p "Soporte de Impresoras: " printerSupport
 if [[ $printerSupport == "y" || $printerSupport == "Y" || $printerSupport == "yes" || $printerSupport == "Yes" ]]
 then
     arch-chroot /mnt /bin/bash -c "pacman -S cups --noconfirm --needed"
